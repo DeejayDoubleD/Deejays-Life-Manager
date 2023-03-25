@@ -18,13 +18,19 @@ class MongoDBConnect:
         """
         try:
             insert_message: results.InsertOneResult = self.database[insert_collection].insert_one(insert_document)
+
         except errors.WriteError as error_message:
             raise error_message
+
+        except errors.ServerSelectionTimeoutError as error_message:
+            raise error_message
+
         return insert_message
 
     def find_one_document(self, search_collection, search_key, search_value) -> dict[str, Any] | None:
         """
-        Finds a document in the collection 'search_collection' with the search parameters 'search_key' and 'search_value'
+        Finds a document in the collection 'search_collection' with the search parameters 'search_key'
+         and 'search_value'
         :param search_collection: str = collection you want to search in
         :param search_key: str = the key you want to search with
         :param search_value: Any = the value you want to search with
