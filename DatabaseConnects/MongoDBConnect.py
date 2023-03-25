@@ -37,7 +37,11 @@ class MongoDBConnect:
         :return: found_document: dict[str, Any] | None = dict with found document or None when the function cannot find
                  a matching document
         """
-        found_document: dict[str, Any] | None = self.database[search_collection].find_one({search_key: search_value})
+        try:
+            found_document: dict[str, Any] | None = self.database[search_collection].find_one({search_key: search_value})
+        except errors.ServerSelectionTimeoutError as error_message:
+            raise error_message
+
         return found_document
 
     def update_one_document(self, update_collection: str, update_id: ObjectId, update_data: dict[str, Any]) -> int:
@@ -48,8 +52,12 @@ class MongoDBConnect:
         :param update_data: dict[str, Any] = data you want to update the document with
         :return: result.modified_count: int = number of updated documents
         """
-        result: results.UpdateResult = self.database[update_collection].update_one({"_id": update_id},
+        try:
+            result: results.UpdateResult = self.database[update_collection].update_one({"_id": update_id},
                                                                                    {"$set": update_data})
+        except errors.ServerSelectionTimeoutError as error_message:
+            raise error_message
+
         return result.modified_count
 
     def delete_one_document(self, delete_collection: str, delete_id: ObjectId) -> int:
@@ -59,5 +67,10 @@ class MongoDBConnect:
         :param delete_id: ObjectId = id from the document you want to delete
         :return: result.deleted_count: int = number of deleted documents
         """
-        result: results.DeleteResult = self.database[delete_collection].delete_one({"_id": delete_id})
+        try:
+            result: results.DeleteResult = self.database[delete_collection].delete_one({"_id": delete_id})
+
+        except errors.ServerSelectionTimeoutError as error_message:
+            raise error_message
+
         return result.deleted_count
