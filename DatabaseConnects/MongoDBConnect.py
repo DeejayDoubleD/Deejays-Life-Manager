@@ -39,7 +39,7 @@ class MongoDBConnect:
         updates the document with the id 'update_id' in the collection 'update_collection' with the data 'update_data'
         :param update_collection: str = collection where you want to update a document
         :param update_id: ObjectId = id from the document you want to update
-        :param update_data: data you want to update the document with
+        :param update_data: dict[str, Any] = data you want to update the document with
         :return: result.modified_count: int = number of updated documents
         """
         result: results.UpdateResult = self.database[update_collection].update_one({"_id": update_id},
