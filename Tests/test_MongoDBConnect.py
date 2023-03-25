@@ -52,6 +52,9 @@ def test_insert_one_document_false_port_and_host():
 
 
 def test_find_one_document_positive():
+    """
+    Tests, if the function 'find_one_document' finds a document properly
+    """
     mongo: MongoDBConnect = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
     document: dict[str, Any] = mongo.find_one_document(TEST_COLLECTION_NAME, 'test_key', TEST_DOCUMENT['test_key'])
     assert document['test_key'] == TEST_DOCUMENT['test_key']
@@ -68,6 +71,9 @@ def test_find_one_document_false_port_and_host():
 
 
 def test_update_one_document_positive():
+    """
+    Tests, if the funtion 'update_one_document' updates a document properly
+    """
     mongo: MongoDBConnect = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
 
     update_document: dict[str, Any] = mongo.find_one_document(TEST_COLLECTION_NAME,
@@ -97,6 +103,9 @@ def test_update_one_document_false_port_and_host():
 
 
 def test_delete_one_document_positive():
+    """
+    Tests, if the function 'delete_one_document' deletes a document properly
+    """
     mongo: MongoDBConnect = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
     delete_document: dict[str, Any] = mongo.find_one_document(TEST_COLLECTION_NAME,
                                                               'test_key', TEST_DOCUMENT['test_key'])
