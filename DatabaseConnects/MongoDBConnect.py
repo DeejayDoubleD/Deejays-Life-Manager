@@ -64,7 +64,7 @@ class MongoDBConnect:
     def delete_one_document(self, delete_collection: str, delete_id: ObjectId) -> int:
         """
         Deletes the document with the id 'delete_id' in the collection 'delete_collection'
-        :param delete_collection: int = collection wehre you want to delete a document
+        :param delete_collection: int = collection where you want to delete a document
         :param delete_id: ObjectId = id from the document you want to delete
         :return: result.deleted_count: int = number of deleted documents
         """

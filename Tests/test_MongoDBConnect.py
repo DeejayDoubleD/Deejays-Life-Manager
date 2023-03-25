@@ -72,7 +72,7 @@ def test_find_one_document_false_port_and_host():
 
 def test_update_one_document_positive():
     """
-    Tests, if the funtion 'update_one_document' updates a document properly
+    Tests, if the function 'update_one_document' updates a document properly
     """
     mongo: MongoDBConnect = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
 
@@ -119,7 +119,7 @@ def test_delete_one_document_positive():
 
 def test_delete_one_document_false_port_and_host():
     """
-    Tests, if the function 'delete_one_documentt' raises an exception when the mongodb isn't accessible because of a
+    Tests, if the function 'delete_one_document' raises an exception when the mongodb isn't accessible because of a
     false port and hostname
     """
     mongo: MongoDBConnect = MongoDBConnect(FALSE_TEST_HOST, FALSE_TEST_PORT, TEST_DB_NAME)
