@@ -38,7 +38,8 @@ class MongoDBConnect:
                  a matching document
         """
         try:
-            found_document: dict[str, Any] | None = self.database[search_collection].find_one({search_key: search_value})
+            found_document: dict[str, Any] | None = self.database[search_collection].find_one(
+                {search_key: search_value})
         except errors.ServerSelectionTimeoutError as error_message:
             raise error_message
 
@@ -54,7 +55,7 @@ class MongoDBConnect:
         """
         try:
             result: results.UpdateResult = self.database[update_collection].update_one({"_id": update_id},
-                                                                                   {"$set": update_data})
+                                                                                       {"$set": update_data})
         except errors.ServerSelectionTimeoutError as error_message:
             raise error_message
 
