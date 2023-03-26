@@ -19,32 +19,49 @@ test_user = test_database.insert_one_document(TEST_COLLECTION_NAME, TEST_DOCUMEN
 
 
 def test_login_user_positive():
-
+    """
+    Tests if the function 'login_user' returns True when given a correct username and password
+    """
     user_logged_in: bool = test_loginhandler.login_user(TEST_DOCUMENT['username'], 'test_pw')
     assert user_logged_in is True
 
 
 def test_login_user_false_username_and_password():
+    """
+    Tests if the function 'login_user' returns False when given an incorrect username and password
+    """
     user_logged_in: bool = test_loginhandler.login_user(FALSE_USERNAME, FALSE_PASSWORD)
     assert user_logged_in is False
 
 
 def test_check_username_positive():
+    """
+    Tests if the function 'check_username' returns True when given a correct username
+    """
     check_username: bool = test_loginhandler.check_username(TEST_DOCUMENT['username'])
     assert check_username is True
 
 
 def test_check_username_false_username():
+    """
+    Tests if the function 'check_username' returns False when given an incorrect username
+    """
     check_username: bool = test_loginhandler.check_username(FALSE_USERNAME)
     assert check_username is False
 
 
 def test_check_password_positive():
+    """
+    Tests if the function 'check_password' returns True when given a correct password
+     """
     check_password: bool = test_loginhandler.check_password(TEST_DOCUMENT['username'], 'test_pw')
     assert check_password is True
 
 
 def test_check_password_false_password():
+    """
+    Tests if the function 'check_password' returns False when given an incorrect password
+    """
     check_password: bool = test_loginhandler.check_password(TEST_DOCUMENT['username'], FALSE_PASSWORD)
     assert check_password is False
     test_database.delete_one_document(TEST_COLLECTION_NAME, test_user.inserted_id)
