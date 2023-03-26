@@ -1,12 +1,11 @@
-import pymongo
 from bson import ObjectId
-from pymongo import results, errors
+from pymongo import results, errors, MongoClient
 from typing import Any
 
 
 class MongoDBConnect:
     def __init__(self, host, port, database):
-        self.client = pymongo.MongoClient(host, port)
+        self.client: MongoClient = MongoClient(host, port)
         self.database = self.client[database]
 
     def insert_one_document(self, insert_collection: str, insert_document: dict[str, Any]) -> results.InsertOneResult:
