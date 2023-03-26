@@ -1,19 +1,20 @@
 from typing import Any
 from Handler.LoginHandler import LoginHandler
 from DatabaseConnects.MongoDBConnect import MongoDBConnect
-from main import bcrypt
+from main import flask_bcrypt
 
 # Define test data
 TEST_HOST: str = "localhost"
 TEST_PORT: int = 27017
 TEST_DB_NAME: str = "test_db"
 TEST_COLLECTION_NAME: str = "User"
-TEST_DOCUMENT: dict[str, Any] = {'username': 'test_user', 'password': bcrypt.generate_password_hash('test_pw')}
+TEST_DOCUMENT: dict[str, Any] = {'username': 'test_user', 'password': flask_bcrypt.generate_password_hash('test_pw')
+                                 .decode('utf-8')}
 FALSE_USERNAME: str = 'false_username'
 FALSE_PASSWORD: str = 'false_passworf'
 
 test_database = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
-test_loginhandler: LoginHandler = LoginHandler(test_database, bcrypt)
+test_loginhandler: LoginHandler = LoginHandler(test_database, flask_bcrypt)
 test_user = test_database.insert_one_document(TEST_COLLECTION_NAME, TEST_DOCUMENT)
 
 
