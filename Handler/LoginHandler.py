@@ -4,12 +4,21 @@ from pymongo.errors import ServerSelectionTimeoutError
 
 
 class LoginHandler:
+    """
+    Handles the login authentication and checks if username and password exists and is correct
+    """
 
     def __init__(self, mongo_db: MongoDBConnect, flask_bcrypt: Bcrypt):
         self.mongo_db = mongo_db
         self.flask_bcrypt = flask_bcrypt
 
     def login_user(self, username: str, password: str):
+        """
+        Checks if the username and password exists and is correct
+        :param username: str = username to check
+        :param password: str = password to check
+        :return: bool = True if username and password exists and is correct, otherwise false
+        """
         try:
             check_username = self.check_username(username)
             check_password = self.check_password(username, password)
@@ -22,6 +31,11 @@ class LoginHandler:
             return False
 
     def check_username(self, username: str):
+        """
+        Checks if the given username exists in database collection 'User'
+        :param username: str = username to check
+        :return: bool = True if username exists, otherwise False
+        """
         try:
             check_username = self.mongo_db.find_one_document('User', 'username', username)
         except ServerSelectionTimeoutError as error_message:
@@ -33,6 +47,12 @@ class LoginHandler:
             return True
 
     def check_password(self, username: str, password: str):
+        """
+        Checks if the given password is correct
+        :param username: str = username to find the correct password
+        :param password: str = password that has to be checked
+        :return: bool = True if password is correct, otherwise False
+        """
         try:
             check_password = self.mongo_db.find_one_document('User', 'username', username)
         except ServerSelectionTimeoutError as error_message:
