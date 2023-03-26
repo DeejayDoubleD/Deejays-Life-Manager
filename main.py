@@ -1,11 +1,38 @@
-from flask import Flask
+from flask import Flask, request, render_template, Response, redirect
+from flask_bcrypt import Bcrypt
+from flask_bootstrap import Bootstrap
 
-app = Flask(__name__)
+from Handler.LoginHandler import LoginHandler
+from DatabaseConnects.MongoDBConnect import MongoDBConnect
 
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+MONGODB_HOST: str = 'localhost'
+MONGODB_PORT: int = 27017
+MONGODB_DATABASE: str = 'DeejaysLifeManager-Dev'
+
+
+app: Flask = Flask(__name__, template_folder='templates')
+Bootstrap(app)
+flask_bcrypt: Bcrypt = Bcrypt(app)
+mongo_db: MongoDBConnect = MongoDBConnect(MONGODB_HOST, MONGODB_PORT, MONGODB_DATABASE)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login_user():
+    if request.method == 'POST':
+        login_handler = LoginHandler(mongo_db, flask_bcrypt)
+        username = request.form['username']
+        password = request.form['password']
+
+        logged_in: bool = login_handler.login_user(username, password)
+
+        if logged_in is True:
+            return Response('{"detail": "You have logged in successfully!"}', status=200,
+                            mimetype='application/json')
+        else:
+            return redirect(request.referrer)
+
+    return render_template('Login-Form.html')
 
 
 if __name__ == '__main__':
