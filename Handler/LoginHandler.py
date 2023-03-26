@@ -10,8 +10,11 @@ class LoginHandler:
         self.flask_bcrypt = flask_bcrypt
 
     def login_user(self, username: str, password: str):
-        check_username = self.check_username(username)
-        check_password = self.check_password(username, password)
+        try:
+            check_username = self.check_username(username)
+            check_password = self.check_password(username, password)
+        except ServerSelectionTimeoutError as error_message:
+            raise error_message
 
         if check_username is True and check_password is True:
             return True
