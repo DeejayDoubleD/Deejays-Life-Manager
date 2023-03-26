@@ -11,7 +11,7 @@ TEST_COLLECTION_NAME: str = "User"
 TEST_DOCUMENT: dict[str, Any] = {'username': 'test_user', 'password': flask_bcrypt.generate_password_hash('test_pw')
                                  .decode('utf-8')}
 FALSE_USERNAME: str = 'false_username'
-FALSE_PASSWORD: str = 'false_passworf'
+FALSE_PASSWORD: str = 'false_password'
 
 test_database = MongoDBConnect(TEST_HOST, TEST_PORT, TEST_DB_NAME)
 test_loginhandler: LoginHandler = LoginHandler(test_database, flask_bcrypt)
@@ -48,5 +48,3 @@ def test_check_password_false_password():
     check_password: bool = test_loginhandler.check_password(TEST_DOCUMENT['username'], FALSE_PASSWORD)
     assert check_password is False
     test_database.delete_one_document(TEST_COLLECTION_NAME, test_user.inserted_id)
-
-
