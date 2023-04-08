@@ -26,9 +26,9 @@ def login_user() -> Response | str:
     form render template
     """
     if request.method == 'POST':
-        login_handler = LoginHandler(mongo_db, flask_bcrypt)
-        username = request.form['username']
-        password = request.form['password']
+        login_handler: LoginHandler = LoginHandler(mongo_db, flask_bcrypt)
+        username: str = request.form['username']
+        password: str = request.form['password']
 
         logged_in: bool = login_handler.login_user(username, password)
 

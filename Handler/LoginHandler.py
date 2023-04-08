@@ -12,7 +12,7 @@ class LoginHandler:
         self.mongo_db = mongo_db
         self.flask_bcrypt = flask_bcrypt
 
-    def login_user(self, username: str, password: str):
+    def login_user(self, username: str, password: str) -> bool:
         """
         Checks if the username and password exists and is correct
         :param username: str = username to check
@@ -20,8 +20,8 @@ class LoginHandler:
         :return: bool = True if username and password exists and is correct, otherwise false
         """
         try:
-            check_username = self.check_username(username)
-            check_password = self.check_password(username, password)
+            check_username: bool = self.check_username(username)
+            check_password: bool = self.check_password(username, password)
         except ServerSelectionTimeoutError as error_message:
             raise error_message
 
@@ -30,14 +30,14 @@ class LoginHandler:
         else:
             return False
 
-    def check_username(self, username: str):
+    def check_username(self, username: str) -> bool:
         """
         Checks if the given username exists in database collection 'User'
         :param username: str = username to check
         :return: bool = True if username exists, otherwise False
         """
         try:
-            check_username = self.mongo_db.find_one_document('User', 'username', username)
+            check_username: dict[str, any] = self.mongo_db.find_one_document('User', 'username', username)
         except ServerSelectionTimeoutError as error_message:
             raise error_message
         
@@ -46,7 +46,7 @@ class LoginHandler:
         else:
             return True
 
-    def check_password(self, username: str, password: str):
+    def check_password(self, username: str, password: str) -> bool:
         """
         Checks if the given password is correct
         :param username: str = username to find the correct password
@@ -54,7 +54,7 @@ class LoginHandler:
         :return: bool = True if password is correct, otherwise False
         """
         try:
-            check_password = self.mongo_db.find_one_document('User', 'username', username)
+            check_password: dict[str, any] = self.mongo_db.find_one_document('User', 'username', username)
         except ServerSelectionTimeoutError as error_message:
             raise error_message
 
