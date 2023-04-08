@@ -18,7 +18,13 @@ mongo_db: MongoDBConnect = MongoDBConnect(MONGODB_HOST, MONGODB_PORT, MONGODB_DA
 
 
 @app.route("/login", methods=['GET', 'POST'])
-def login_user():
+def login_user() -> Response | str:
+    """
+    Gets the username and password from the form and logs the user in with the login_handler module
+
+    :return: Response 200 if username and password ist correct, else redirect response to login page | login
+    form render template
+    """
     if request.method == 'POST':
         login_handler = LoginHandler(mongo_db, flask_bcrypt)
         username = request.form['username']
