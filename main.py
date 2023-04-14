@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, Response, redirect
 from flask_bcrypt import Bcrypt
-from flask_bootstrap import Bootstrap
 
 from Handler.LoginHandler import LoginHandler
 from DatabaseConnects.MongoDBConnect import MongoDBConnect
@@ -12,7 +11,6 @@ MONGODB_DATABASE: str = 'DeejaysLifeManager-Dev'
 
 
 app: Flask = Flask(__name__, template_folder='templates')
-Bootstrap(app)
 flask_bcrypt: Bcrypt = Bcrypt(app)
 mongo_db: MongoDBConnect = MongoDBConnect(MONGODB_HOST, MONGODB_PORT, MONGODB_DATABASE)
 
