@@ -3,7 +3,10 @@
 {% extends 'base-template.html' %}
 
 <title>{% block title %} Login {% endblock %}</title>
+
+{% block active_page %} Login {% endblock %}
 {% block content %}
+<div class="container-fluid">
   <h1>Login</h1>
   <form method="post">
 
@@ -15,4 +18,5 @@
 
     <input type="submit" value="Login">
   </form>
+</div>
 {% endblock %}
