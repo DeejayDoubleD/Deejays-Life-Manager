@@ -34,7 +34,7 @@ def login_user() -> Response | str:
             return Response('{"detail": "You have logged in successfully!"}', status=200,
                             mimetype='application/json')
         else:
-            return redirect(request.referrer)
+            return redirect("/login")
 
     return render_template('Login-Form.html')
 
